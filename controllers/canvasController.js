@@ -64,10 +64,26 @@ const deleteCanvas = async (req, res) => {
   }
 };
 
+const shareCanvas = async (req, res) => {
+  const email = req.email;
+  const id = req.params.id;
+  const { shareWith } = req.body;
+  try {
+    const canvas = await Canvas.shareCanvas(email, id, shareWith);
+    if (!canvas) {
+      return res.status(404).json({ error: "Canvas not found" });
+    }
+    res.status(200).json(canvas);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllCanvases,
   createCanvas,
   loadCanvas,
   updateCanvas,
-  deleteCanvas
+  deleteCanvas,
+  shareCanvas,
 };
