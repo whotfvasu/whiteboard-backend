@@ -8,7 +8,12 @@ const canvasRoutes = require("./routes/canvasRoutes");
 
 dotenv.config();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URI,
+    credentials: true,
+  })
+);
 const connectDB = require("./db");
 
 connectDB();
