@@ -86,10 +86,29 @@ canvasSchema.statics.updateCanvas = async function (email, id, elements) {
     if (!canvas) {
       return res.status(404).json({ error: "Canvas not found" });
     }
-   
+
     canvas.elements = elements;
     await canvas.save();
     return canvas;
+  } catch (error) {
+    throw error;
+  }
+};
+
+canvasSchema.statics.deleteCanvas = async function (email, id) {
+  const user = await mongoose.model("User").findOne({ email });
+  try {
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const canvas = await this.findOneAndDelete({
+      _id: id,
+      owner: user._id,
+    });
+    if (!canvas) {
+      return false;
+    }
+    return true;
   } catch (error) {
     throw error;
   }

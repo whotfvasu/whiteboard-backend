@@ -50,9 +50,24 @@ const updateCanvas = async (req, res) => {
   }
 };
 
+const deleteCanvas = async (req, res) => {
+  const email = req.email;
+  const id = req.params.id;
+  try {
+    const success = await Canvas.deleteCanvas(email, id);
+    if (!success) {
+      return res.status(404).json({ error: "Canvas not found" });
+    }
+    res.status(200).json({ message: "Canvas deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllCanvases,
   createCanvas,
-    loadCanvas,
+  loadCanvas,
   updateCanvas,
+  deleteCanvas
 };

@@ -4,6 +4,7 @@ const {
   createCanvas,
   loadCanvas,
   updateCanvas,
+  deleteCanvas
 } = require("../controllers/canvasController");
 const { authMiddleware } = require("../middlewares/authMiddleware");
 
@@ -13,5 +14,6 @@ router.get("/", authMiddleware, getAllCanvases);
 router.post("/", authMiddleware, createCanvas);
 router.get("/:id", authMiddleware, loadCanvas);
 router.put("/update/:id", authMiddleware, updateCanvas);
+router.delete("/delete/:id", authMiddleware, deleteCanvas)
 
 module.exports = router;
